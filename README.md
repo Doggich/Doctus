@@ -81,4 +81,4 @@ Doctus/
 ***Проект разработан в образовательных целях в рамках дипломной работы.***
 
 
-![logo](https://www.ks54.ru/)
+![logo](https://ks54.mskobr.ru/attach_files/logo/герб.png)
