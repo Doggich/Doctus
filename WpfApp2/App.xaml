@@ -2,8 +2,10 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:WpfApp2"
-             StartupUri="MainWindow.xaml">
+             StartupUri="main/MainWindow.xaml">
     <Application.Resources>
-         
+        <Style x:Key="WindowIcon" TargetType="Window">
+            <Setter Property="Icon" Value="/res/icon.ico"/>
+        </Style>
     </Application.Resources>
 </Application>

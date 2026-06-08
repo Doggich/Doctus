@@ -63,7 +63,7 @@ namespace MarkdownEditorDiploma
             }
             else
             {
-                LoadUserPreviewStyles(); // создаст файл
+                LoadUserPreviewStyles();
                 System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
                 {
                     FileName = cssPath,
@@ -113,7 +113,6 @@ namespace MarkdownEditorDiploma
         {
             string cssPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "preview-styles.css");
 
-            // Убедимся, что файл существует
             if (!File.Exists(cssPath))
             {
                 CreateDefaultCssFile();
@@ -207,7 +206,6 @@ namespace MarkdownEditorDiploma
                     string markdownText = Editor.Text;
                     string htmlBody = Markdown.ToHtml(markdownText, _pipeline);
 
-                    // Упрощённая светлая тема для экспорта (хорошо печатается)
                     string fullHtml = $@"<!DOCTYPE html>
                                         <html>
                                         <head>
@@ -269,7 +267,6 @@ namespace MarkdownEditorDiploma
             {
                 try
                 {
-                    // Используем упрощённую HTML-разметку для PDF (светлая тема)
                     string pdfHtml = GeneratePdfHtml(Editor.Text);
 
                     var tempWebView = new Microsoft.Web.WebView2.Wpf.WebView2();
@@ -336,34 +333,6 @@ namespace MarkdownEditorDiploma
                 MessageBox.Show($"Ошибка: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
-        //private void SendByEmail_Click(object sender, RoutedEventArgs e)
-        //{
-        //    try
-        //    {
-        //        // Сохраняем временный файл
-        //        string tempFile = Path.GetTempFileName() + ".md";
-        //        File.WriteAllText(tempFile, Editor.Text);
-
-        //        // Открываем почтовый клиент
-        //        string subject = Uri.EscapeDataString("Документ Doctus");
-        //        string body = Uri.EscapeDataString("Отправляю документ, созданный в Doctus.");
-
-        //        System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
-        //        {
-        //            FileName = $"mailto:?subject={subject}&body={body}",
-        //            UseShellExecute = true
-        //        });
-
-        //        // Удаляем временный файл через 5 секунд
-        //        Task.Delay(5000).ContinueWith(_ => { try { File.Delete(tempFile); } catch { } });
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.Show($"Ошибка при открытии почтового клиента:\n{ex.Message}",
-        //            "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-        //    }
-        //}
 
         private void OpenHtml_Click(object sender, RoutedEventArgs e)
         {
@@ -576,7 +545,13 @@ namespace MarkdownEditorDiploma
 
         private void About_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Markdown Редактор Doctus\nВерсия 1.0\n\nРазработано в рамках дипломного проекта\n\nИспользуемые технологии:\n- .NET 8 / WPF\n- WebView2\n- Markdig",
+            MessageBox.Show("Markdown Редактор Doctus\n" +
+                            "Версия 1.0\n\n" +
+                            "Разработано в рамках дипломного проекта\n\n" +
+                            "Используемые технологии:\n" +
+                            "- .NET 8 / WPF\n" +
+                            "- WebView2\n" +
+                            "- Markdig",
                             "О программе",
                             MessageBoxButton.OK,
                             MessageBoxImage.Information);

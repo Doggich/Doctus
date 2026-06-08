@@ -32,7 +32,6 @@ namespace MarkdownEditorDiploma
 
         private async void Send_Click(object sender, RoutedEventArgs e)
         {
-            // Валидация
             if (string.IsNullOrWhiteSpace(YourEmailBox.Text))
             {
                 ShowStatus("❌ Введите вашу почту", false);
@@ -64,7 +63,6 @@ namespace MarkdownEditorDiploma
 
                 ShowStatus($"📄 Создание файла в формате {format}...", true);
 
-                // Обработка разных форматов
                 if (format.Contains("Markdown"))
                 {
                     attachmentName = "document.md";
@@ -129,42 +127,40 @@ namespace MarkdownEditorDiploma
             message.To.Add(new MailboxAddress("", toEmail));
             message.Subject = subject;
 
-            // Формируем HTML-тело письма
             string fullHtml = $@"
-<!DOCTYPE html>
-<html>
-<head><meta charset='UTF-8'><title>{subject}</title></head>
-<body style='font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;'>
-    <div style='background: linear-gradient(135deg, #DB1A1A, #FF4D4D); padding: 20px; text-align: center; border-radius: 10px 10px 0 0;'>
-        <h1 style='color: white; margin: 0;'>📧 Doctus</h1>
-        <p style='color: #FFD4D4; margin: 5px 0 0;'>Markdown редактор</p>
-    </div>
-    <div style='background: #f9f9f9; padding: 20px; border-radius: 0 0 10px 10px; border: 1px solid #ddd; border-top: none;'>
-        <p><strong>📨 Сообщение от отправителя:</strong></p>
-        <blockquote style='background: #f4f4f4; padding: 15px; border-left: 4px solid #DB1A1A; margin: 10px 0; font-style: italic;'>
-            {plainMessage}
-        </blockquote>
-        <hr style='border: none; border-top: 1px solid #ddd; margin: 20px 0;'/>
-        <p><strong>📎 Вложение:</strong> {fileName}</p>
-        <hr style='border: none; border-top: 1px solid #ddd; margin: 20px 0;'/>
-        <div style='background: #f0f0f0; padding: 15px; border-radius: 8px;'>
-            <p><strong>🔧 Детали:</strong></p>
-            <ul style='color: #666; font-size: 12px;'>
-                <li>Создано в Doctus</li>
-                <li>{DateTime.Now:dd.MM.yyyy HH:mm:ss}</li>
-            </ul>
-        </div>
-        <p style='color: #999; font-size: 11px; text-align: center; margin-top: 20px;'>
-            Отправлено через Doctus — современный Markdown редактор
-        </p>
-    </div>
-</body>
-</html>";
+                        <!DOCTYPE html>
+                        <html>
+                        <head><meta charset='UTF-8'><title>{subject}</title></head>
+                        <body style='font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;'>
+                            <div style='background: linear-gradient(135deg, #DB1A1A, #FF4D4D); padding: 20px; text-align: center; border-radius: 10px 10px 0 0;'>
+                                <h1 style='color: white; margin: 0;'>📧 Doctus</h1>
+                                <p style='color: #FFD4D4; margin: 5px 0 0;'>Markdown редактор</p>
+                            </div>
+                            <div style='background: #f9f9f9; padding: 20px; border-radius: 0 0 10px 10px; border: 1px solid #ddd; border-top: none;'>
+                                <p><strong>📨 Сообщение от отправителя:</strong></p>
+                                <blockquote style='background: #f4f4f4; padding: 15px; border-left: 4px solid #DB1A1A; margin: 10px 0; font-style: italic;'>
+                                    {plainMessage}
+                                </blockquote>
+                                <hr style='border: none; border-top: 1px solid #ddd; margin: 20px 0;'/>
+                                <p><strong>📎 Вложение:</strong> {fileName}</p>
+                                <hr style='border: none; border-top: 1px solid #ddd; margin: 20px 0;'/>
+                                <div style='background: #f0f0f0; padding: 15px; border-radius: 8px;'>
+                                    <p><strong>🔧 Детали:</strong></p>
+                                    <ul style='color: #666; font-size: 12px;'>
+                                        <li>Создано в Doctus</li>
+                                        <li>{DateTime.Now:dd.MM.yyyy HH:mm:ss}</li>
+                                    </ul>
+                                </div>
+                                <p style='color: #999; font-size: 11px; text-align: center; margin-top: 20px;'>
+                                    Отправлено через Doctus — современный Markdown редактор
+                                </p>
+                            </div>
+                        </body>
+                        </html>";
 
             var bodyBuilder = new BodyBuilder();
             bodyBuilder.HtmlBody = fullHtml;
 
-            // Добавляем вложение (не закрываем поток сразу, нужно для отправки)
             if (attachmentStream != null)
             {
                 attachmentStream.Position = 0;
@@ -181,7 +177,6 @@ namespace MarkdownEditorDiploma
                 await client.DisconnectAsync(true);
             }
 
-            // Закрываем поток после отправки
             attachmentStream?.Dispose();
         }
 

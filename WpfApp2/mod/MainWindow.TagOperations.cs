@@ -45,7 +45,6 @@ namespace MarkdownEditorDiploma
             Editor.CaretIndex = Editor.SelectionStart;
         }
 
-        // Обработчики
         private void TagBold_Click(object sender, RoutedEventArgs e) => WrapSelectedText("**", "**", "жирный текст");
         private void TagItalic_Click(object sender, RoutedEventArgs e) => WrapSelectedText("*", "*", "курсивный текст");
         private void TagUnderline_Click(object sender, RoutedEventArgs e) => WrapSelectedText("<u>", "</u>", "подчёркнутый текст");
